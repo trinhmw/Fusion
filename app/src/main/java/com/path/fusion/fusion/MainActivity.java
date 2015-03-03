@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.ipaulpro.afilechooser.utils.FileUtils;
@@ -25,11 +26,14 @@ public class MainActivity extends ActionBarActivity {
     Button mOpenFileButton;
     Button mLoadFileButton;
     Button mClearDataButton;
+    Button mFusionButton;
+    Button mPathButton;
+
     private FileManager fileManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        fileManager = FileManager.getInstance(getApplicationContext());
+        fileManager = FileManager.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mOpenFileButton = (Button) findViewById(R.id.openFileButton);
@@ -49,11 +53,12 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    CSVReader reader = new CSVReader(new FileReader(csvPath), ',');
+                    CSVReader reader = new CSVReader(new FileReader(csvPath), ',', ';', 1);
                     String [] nextLine;
                     while ((nextLine = reader.readNext()) != null){
                         fileManager.addToMap(nextLine[0],nextLine[1],nextLine[2]);
                         Log.d("Output",fileManager.getValue(nextLine[0],nextLine[1]));
+                        Toast.makeText(getApplicationContext(), "Load complete.", Toast.LENGTH_SHORT).show();
                     }
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -70,9 +75,30 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 fileManager.deleteFile();
+                Toast.makeText(getApplicationContext(), "Data deleted.", Toast.LENGTH_SHORT).show();
             }
         };
+        mClearDataButton.setOnClickListener(clearDataOnClickListener);
 
+        mFusionButton = (Button) findViewById(R.id.fusionButton);
+        View.OnClickListener fusionOnClickListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent fusionIntent = new Intent(getApplicationContext(), FusionActivity.class);
+                startActivity(fusionIntent);
+            }
+        };
+        mFusionButton.setOnClickListener(fusionOnClickListener);
+
+        mPathButton = (Button) findViewById(R.id.pathButton);
+        View.OnClickListener pathOnClickListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent fusionIntent = new Intent(getApplicationContext(), PathActivity.class);
+                startActivity(fusionIntent);
+            }
+        };
+        mPathButton.setOnClickListener(pathOnClickListener);
 
 
     }

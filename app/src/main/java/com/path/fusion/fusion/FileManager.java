@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeSet;
@@ -18,7 +19,7 @@ import java.util.TreeSet;
  * Created by Melissa on 3/2/2015.
  */
 public class FileManager {
-    protected Context context;
+
     private static HashMap<Pair<String,String>, String> fusionList = new HashMap<Pair<String, String>, String>();
     private static Set<String> uniqueSet = new TreeSet<String>();
     private static FileManager instance = null;
@@ -27,23 +28,24 @@ public class FileManager {
     private static String fileName = "/fusionData.dat";
     private static String fileNameUnique = "/fusionUnique.dat";
 
-    public static FileManager getInstance(Context context){
+
+    protected FileManager(){
+    }
+
+    public static FileManager getInstance(){
         if(instance == null){
-            instance = new FileManager(context);
-//            file = new File(context.getFilesDir(), fileName);
+            instance = new FileManager();
             file = new File(Environment.getExternalStorageDirectory(), fileName);
+            fileUnique = new File(Environment.getExternalStorageDirectory(), fileNameUnique);
             try {
                 file.createNewFile();
+                fileUnique.createNewFile();
                 openFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         return instance;
-    }
-
-    protected FileManager(Context context){
-        setContext(context);
     }
 
     public static void openFile() {
@@ -82,6 +84,10 @@ public class FileManager {
 
     }
 
+    public ArrayList<String> getUnique(){
+        return new ArrayList<String>(uniqueSet);
+    }
+
     public void addToMap(String pairLeft, String pairRight, String value){
         fusionList.put(new Pair(pairLeft, pairRight), value);
         uniqueSet.add(pairLeft);
@@ -99,16 +105,8 @@ public class FileManager {
     }
 
     public void deleteFile(){
-        context.deleteFile(fileName);
         file.delete();
-    }
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
+        fileUnique.delete();
     }
 
     public HashMap<Pair<String, String>, String> getFusionList() {

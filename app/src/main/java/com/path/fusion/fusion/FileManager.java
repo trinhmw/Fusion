@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -92,7 +93,7 @@ public class FileManager {
         fusionList.put(new Pair(pairLeft, pairRight), value);
         uniqueSet.add(pairLeft);
         uniqueSet.add(pairRight);
-        uniqueSet.add(value);
+//        uniqueSet.add(value);
         writeFile();
     }
 
@@ -107,6 +108,10 @@ public class FileManager {
     public void deleteFile(){
         file.delete();
         fileUnique.delete();
+    }
+
+    public ArrayList<String> generatePaths(String initial, String result){
+        return new ArrayList<String>();
     }
 
     public HashMap<Pair<String, String>, String> getFusionList() {

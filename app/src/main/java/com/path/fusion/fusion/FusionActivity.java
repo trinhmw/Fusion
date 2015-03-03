@@ -4,13 +4,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 
 public class FusionActivity extends ActionBarActivity {
     Spinner mCategory1Spinner;
     Spinner mCategory2Spinner;
+    Button mFusionButton;
     private FileManager fileManager;
 
     @Override
@@ -19,11 +22,23 @@ public class FusionActivity extends ActionBarActivity {
         setContentView(R.layout.activity_fusion);
         fileManager = FileManager.getInstance();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, fileManager.getUnique());
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, fileManager.getUnique());
         mCategory1Spinner = (Spinner) findViewById(R.id.category1Spinner);
         mCategory2Spinner = (Spinner) findViewById(R.id.category2Spinner);
         mCategory1Spinner.setAdapter(adapter);
         mCategory2Spinner.setAdapter(adapter);
+
+        mFusionButton = (Button) findViewById(R.id.fusionButton);
+        View.OnClickListener resultOnClickListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                String result = fileManager.getValue(mCategory1Spinner.getSelectedItem().toString(), mCategory2Spinner.getSelectedItem().toString());
+                mFusionButton.setText(result);
+            }
+        };
+        mFusionButton.setOnClickListener(resultOnClickListener);
+
+
     }
 
 

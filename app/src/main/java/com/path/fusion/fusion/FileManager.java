@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -109,7 +110,27 @@ public class FileManager {
     }
 
     public ArrayList<String> generatePaths(String initial, String result){
+        Set<String> settledNodes = new HashSet<String>(getUnique());
+        Set<String> unsettledNodes = new HashSet<String>(getUnique());
+        HashMap<String, Integer> distance = new HashMap<String, Integer>();
+        HashMap<String,String> predecessors = new HashMap<String, String>();
+
+        distance.put(initial, 0);
+        while(unsettledNodes.size() > 0){
+            String node = getMinimum(unsettledNodes);
+            settledNodes.add(node);
+            unsettledNodes.remove(node);
+            findMinimalDistance(node);
+        }
         return new ArrayList<String>();
+    }
+
+    private String getMinimum(Set<String> unsettledNodes){
+        return null;
+    }
+
+    private void findMinimalDistance(String node){
+
     }
 
     public HashMap<Pair<String, String>, String> getFusionList() {

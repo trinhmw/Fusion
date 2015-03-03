@@ -1,6 +1,5 @@
 package com.path.fusion.fusion;
 
-import android.content.Context;
 import android.os.Environment;
 import android.util.Pair;
 
@@ -10,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -142,4 +140,27 @@ public class FileManager {
         FileManager.fileName = fileName;
     }
 
+    public static Set<String> getUniqueSet() {
+        return uniqueSet;
+    }
+
+    public static void setUniqueSet(Set<String> uniqueSet) {
+        FileManager.uniqueSet = uniqueSet;
+    }
+
+    public static File getFileUnique() {
+        return fileUnique;
+    }
+
+    public static void setFileUnique(File fileUnique) {
+        FileManager.fileUnique = fileUnique;
+    }
+
+    public static String getFileNameUnique() {
+        return fileNameUnique;
+    }
+
+    public static void setFileNameUnique(String fileNameUnique) {
+        FileManager.fileNameUnique = fileNameUnique;
+    }
 }

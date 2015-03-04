@@ -28,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
     Button mClearDataButton;
     Button mFusionButton;
     Button mPathButton;
-    Button mGenerateEdgesButton;
+//    Button mGenerateEdgesButton;
 
     private FileManager fileManager;
 
@@ -96,14 +96,14 @@ public class MainActivity extends ActionBarActivity {
         mPathButton.setOnClickListener(pathOnClickListener);
 
 
-        mGenerateEdgesButton = (Button) findViewById(R.id.generateEdgesButton);
-        View.OnClickListener generateOnClickListener = new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                fileManager.generateAllEdges();
-            }
-        };
-        mGenerateEdgesButton.setOnClickListener(generateOnClickListener);
+//        mGenerateEdgesButton = (Button) findViewById(R.id.generateEdgesButton);
+//        View.OnClickListener generateOnClickListener = new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                fileManager.generateAllEdges();
+//            }
+//        };
+//        mGenerateEdgesButton.setOnClickListener(generateOnClickListener);
 
     }
 

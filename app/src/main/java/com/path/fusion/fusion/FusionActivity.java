@@ -2,6 +2,7 @@ package com.path.fusion.fusion;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ public class FusionActivity extends ActionBarActivity {
         mCategory2Spinner.setAdapter(adapter);
 
         mTextview = (TextView) findViewById(R.id.textView);
+        mTextview.setMovementMethod(new ScrollingMovementMethod());
 
         mFusionButton = (Button) findViewById(R.id.fusionButton);
         View.OnClickListener resultOnClickListener = new View.OnClickListener(){

@@ -2,6 +2,7 @@ package com.path.fusion.fusion;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
@@ -37,6 +38,7 @@ public class PathActivity extends ActionBarActivity {
         mResultSpinner.setAdapter(adapter);
 
         mTextView = (TextView) findViewById(R.id.textView);
+        mTextView.setMovementMethod(new ScrollingMovementMethod());
 
         mPathButton = (Button) findViewById(R.id.pathButton);
         View.OnClickListener pathOnClickListener = new View.OnClickListener(){
@@ -49,6 +51,7 @@ public class PathActivity extends ActionBarActivity {
         mPathButton.setOnClickListener(pathOnClickListener);
 
         mAltTextView = (TextView) findViewById(R.id.altTextView);
+        mAltTextView.setMovementMethod(new ScrollingMovementMethod());
 
         mAltPathButton = (Button) findViewById(R.id.altPathButton);
         View.OnClickListener altPathOnClickListener = new View.OnClickListener(){
@@ -98,7 +101,7 @@ public class PathActivity extends ActionBarActivity {
                     i++;
                 }
             }
-            textView.append("\n");
+            textView.append("\n-------\n");
         }
     }
 

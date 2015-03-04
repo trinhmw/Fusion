@@ -22,16 +22,19 @@ import java.util.TreeSet;
 public class FileManager {
 
     private static HashMap<Pair<String,String>, String> fusionList = new HashMap<>();
+    private static HashMap<Pair<String,String>, String> fusionList2 = new HashMap<Pair<String,String>,String>();
     private static HashMap<String, Vertex> uniqueHash = new HashMap<>();
     private static List<Edge> edges = new ArrayList<>();
     private static Set<Vertex> uniqueSet = new TreeSet<>();
     private static Set<String> uniqueString = new TreeSet<>();
     private static FileManager instance = null;
     private static File file;
+    private static File file2;
     private static File fileUnique;
     private static File fileEdge;
     private static File fileUniqueHash;
     private static String fileName = "/fusionData.dat";
+    private static String fileName2 = "/fusionData2.dat";
     private static String fileNameUnique = "/fusionUnique.dat";
     private static String fileNameEdges = "/fusionEdge.dat";
     private static String fileNameHash = "/fusionUniqueHash.dat";
@@ -47,11 +50,13 @@ public class FileManager {
             fileUnique = new File(Environment.getExternalStorageDirectory(), fileNameUnique);
             fileEdge = new File(Environment.getExternalStorageDirectory(), fileNameEdges);
             fileUniqueHash = new File(Environment.getExternalStorageDirectory(), fileNameHash);
+            file2 = new File(Environment.getExternalStorageDirectory(), fileName2);
             try {
                 file.createNewFile();
                 fileUnique.createNewFile();
                 fileEdge.createNewFile();
                 fileUniqueHash.createNewFile();
+                file2.createNewFile();
                 openFile();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -78,6 +83,10 @@ public class FileManager {
 
             ois = new ObjectInputStream(new FileInputStream(fileUniqueHash));
             uniqueHash = (HashMap<String, Vertex>) ois.readObject();
+            ois.close();
+
+            ois = new ObjectInputStream(new FileInputStream(file2));
+            fusionList2 = (HashMap<Pair<String, String>, String>) ois.readObject();
             ois.close();
 
         } catch (ClassNotFoundException e) {
@@ -108,6 +117,11 @@ public class FileManager {
             oos.writeObject(uniqueHash);
             oos.flush();
             oos.close();
+
+            oos = new ObjectOutputStream(new FileOutputStream(file2));
+            oos.writeObject(fusionList2);
+            oos.flush();
+            oos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -124,6 +138,7 @@ public class FileManager {
 
     public void addToMap(String pairLeft, String pairRight, String value){
         fusionList.put(new Pair(pairLeft, pairRight), value);
+        fusionList2.put(new Pair(pairLeft,value),pairRight);
         uniqueString.add(pairLeft);
         uniqueString.add(pairRight);
         uniqueString.add(value);
@@ -187,6 +202,10 @@ public class FileManager {
         return fusionList.get(new Pair(pairLeft, pairRight));
     }
 
+    public String getMaterial(String pairLeft, String value){
+        return fusionList2.get(new Pair(pairLeft, value));
+    }
+
     public void destroyInstance(){
         instance = null;
     }
@@ -196,6 +215,7 @@ public class FileManager {
         fileUnique.delete();
         fileEdge.delete();
         fileUniqueHash.delete();
+        file2.delete();
     }
 
     public HashMap<Pair<String, String>, String> getFusionList() {

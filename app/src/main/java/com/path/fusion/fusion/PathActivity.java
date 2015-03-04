@@ -52,29 +52,17 @@ public class PathActivity extends ActionBarActivity {
                 int i = 0;
                 for(Vertex vertex : path){
                     if(i != 0) {
-//                        mTextView.append();
+                        mTextView.append(" + " + fileManager.getMaterial(result.get(i-1).getName(),vertex.getName()) + "=" + vertex.getName() + "\n");
                     }
-                    result.add(vertex);
-                    mTextView.append(vertex.getName() + "\n");
-                    Log.d("PathActivity", vertex.getName());
-                }
+                    if(i == 0){
+                        mTextView.append(vertex.getName() + "\n");
+                    }
 
-//                for(int i = 0;i<result.size()-1;i++){
-//                   pathAlgorithm.execute(result.get(i));
-//                   ingredientPath = pathAlgorithm.getPath(result.get(i+1));
-//                }
-//                for(Vertex vertex : ingredientPath){
-//                    ingredient.add(vertex);
-//                    Log.d("PathActivity", vertex.getName());
-//                }
-//                for(int i = 0;i<result.size()-1;i++){
-//                    mTextView.append(result.get(i).getName() + "->");
-//                    if(i >= ingredient.size()-1){}
-//                    else {
-//                        mTextView.append(ingredient.get(i).getName() + "=");
-//                    }
-//                    mTextView.append(result.get(i+1).getName());
-//                }
+                    result.add(vertex);
+                    mTextView.append(vertex.getName());
+                    Log.d("PathActivity", vertex.getName());
+                    i++;
+                }
             }
         };
         mPathButton.setOnClickListener(pathOnClickListener);

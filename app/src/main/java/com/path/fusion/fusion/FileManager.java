@@ -65,6 +65,10 @@ public class FileManager {
         return instance;
     }
 
+    /**
+     * openFile - Reads in the existing files that were saved in the device's
+     * external storage and assigns it to the existing variables.
+     */
     public static void openFile() {
         ObjectInputStream ois = null;
         try {
@@ -96,6 +100,11 @@ public class FileManager {
         }
     }
 
+
+    /**
+     * writeFile - Writes over the existing files associated with the object with
+     * the current objects.
+     */
     public void writeFile() {
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
@@ -128,14 +137,27 @@ public class FileManager {
 
     }
 
-    public ArrayList<String> getUnique(){
-        ArrayList<String> stringUnique = new ArrayList<String>();
-        for(Vertex item : uniqueSet){
-            stringUnique.add(item.getName());
-        }
-        return new ArrayList<String>(stringUnique);
+
+    /**
+     * deleteFile - Cleans up all files that were created saved by the Fusion application
+     */
+    public void deleteFile(){
+        file.delete();
+        fileUnique.delete();
+        fileEdge.delete();
+        fileUniqueHash.delete();
+        file2.delete();
     }
 
+
+    /**
+     * addToMap - Adds 1st part, 2nd part, and the result of the combination to the
+     * hashmap and adds all the unique names to a set. The hashmaps and the set is
+     * saved onto the device's external storage.
+     * @param pairLeft
+     * @param pairRight
+     * @param value
+     */
     public void addToMap(String pairLeft, String pairRight, String value){
         fusionList.put(new Pair(pairLeft, pairRight), value);
         fusionList2.put(new Pair(pairLeft,value),pairRight);
@@ -146,10 +168,13 @@ public class FileManager {
         writeFile();
     }
 
+    /**
+     * uniqueStringToVertexSet - Makes a Vertex set out of an existing String set.
+     */
     public void uniqueStringToVertexSet(){
         Vertex v;
         for(String name : uniqueString){
-            Log.d("uniqueStringToVertexSet",name);
+//            Log.d("uniqueStringToVertexSet",name);
             v = new Vertex(name,name);
             uniqueSet.add(v);
             uniqueHash.put(name, v);
@@ -157,6 +182,10 @@ public class FileManager {
         writeFile();
     }
 
+    /**
+     * generateEdge - Creates all the edges that has the vertex as it's initial start point.
+     * @param source
+     */
     public void generateEdge(Vertex source){
         String id;
         String destination;
@@ -164,8 +193,6 @@ public class FileManager {
         Edge e;
         int weight = 1;
         for(Vertex next : uniqueSet){
-//            destination = fusionList.get(new Pair(source.getName(),next.getName()));
-//            id = source.getName() + "_" + destination;
             //If this combination exists
             if(
                 (fusionList.containsKey(new Pair(source.getName(), next.getName()))) &&
@@ -186,6 +213,10 @@ public class FileManager {
         }
     }
 
+    /**
+     * generateAllEdges - Takes all the unique vertexes and creates all existing edges
+     * between all of them and saves it to the device's external storage.
+     */
     public void generateAllEdges(){
         for (Vertex vertex : uniqueSet){
             generateEdge(vertex);
@@ -194,89 +225,52 @@ public class FileManager {
         writeFile();
     }
 
-    public static List<Edge> getEdges() {
-        return edges;
-    }
-
+    /**
+     * getValue - Retrieves the expected result of the combination of the first and second pair.
+     * @param pairLeft
+     * @param pairRight
+     * @return
+     */
     public String getValue(String pairLeft, String pairRight){
         return fusionList.get(new Pair(pairLeft, pairRight));
     }
 
+    /**
+     * getMaterial - Uses information on the first part of the pair and the expected result to
+     * find out the Second part of the pair needed to create the result
+     * @param pairLeft - First part of the pair to create the result
+     * @param value - Expected result
+     * @return
+     */
     public String getMaterial(String pairLeft, String value){
         return fusionList2.get(new Pair(pairLeft, value));
     }
 
+    /**
+     * destroyInstance - Invalidates the FileManager's current instance
+     */
     public void destroyInstance(){
         instance = null;
-    }
-
-    public void deleteFile(){
-        file.delete();
-        fileUnique.delete();
-        fileEdge.delete();
-        fileUniqueHash.delete();
-        file2.delete();
-    }
-
-    public HashMap<Pair<String, String>, String> getFusionList() {
-        return fusionList;
-    }
-
-    private void setFusionList(HashMap<Pair<String, String>, String> fusionList) {
-        this.fusionList = fusionList;
     }
 
     public static HashMap<String, Vertex> getUniqueHash() {
         return uniqueHash;
     }
 
-    private static void setInstance(FileManager instance) {
-        FileManager.instance = instance;
-    }
-
     public static File getFile() {
         return file;
     }
 
-    private static void setFile(File file) {
-        FileManager.file = file;
+    public static List<Edge> getEdges() {
+        return edges;
     }
 
-    public static String getFileName() {
-        return fileName;
+    public ArrayList<String> getUnique(){
+        ArrayList<String> stringUnique = new ArrayList<String>();
+        for(Vertex item : uniqueSet){
+            stringUnique.add(item.getName());
+        }
+        return new ArrayList<String>(stringUnique);
     }
-
-    private static void setFileName(String fileName) {
-        FileManager.fileName = fileName;
-    }
-
-    public static Set<Vertex> getUniqueSet() {
-        return uniqueSet;
-    }
-
-    public static ArrayList<Vertex> getUniqueArrayList() {
-        return new ArrayList<Vertex>(uniqueSet);
-    }
-
-    private static void setUniqueSet(Set<Vertex> uniqueSet) {
-        FileManager.uniqueSet = uniqueSet;
-    }
-
-    public static File getFileUnique() {
-        return fileUnique;
-    }
-
-    private static void setFileUnique(File fileUnique) {
-        FileManager.fileUnique = fileUnique;
-    }
-
-    public static String getFileNameUnique() {
-        return fileNameUnique;
-    }
-
-    private static void setFileNameUnique(String fileNameUnique) {
-        FileManager.fileNameUnique = fileNameUnique;
-    }
-
 
 }

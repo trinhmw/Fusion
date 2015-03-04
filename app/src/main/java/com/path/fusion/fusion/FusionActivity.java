@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 public class FusionActivity extends ActionBarActivity {
@@ -36,13 +39,13 @@ public class FusionActivity extends ActionBarActivity {
         View.OnClickListener resultOnClickListener = new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                String result = fileManager.getValue(mCategory1Spinner.getSelectedItem().toString(), mCategory2Spinner.getSelectedItem().toString());
-                if(result == null)
-                {
-                 mTextview.setText("No information available.");
-                }
-                else {
-                    mTextview.setText(result);
+                if (validSpinner(fileManager.getUnique())) {
+                    String result = fileManager.getValue(mCategory1Spinner.getSelectedItem().toString(), mCategory2Spinner.getSelectedItem().toString());
+                    if (result == null) {
+                        mTextview.setText("No information available.");
+                    } else {
+                        mTextview.setText(result);
+                    }
                 }
             }
         };
@@ -51,6 +54,23 @@ public class FusionActivity extends ActionBarActivity {
 
     }
 
+    /**
+     * validSpinner - Checks content of the Arraylist for the adapter to make sure it's not null or empty
+     * @param content
+     * @return
+     */
+    public boolean validSpinner(ArrayList<String> content){
+        boolean status = false;
+        if(content == null || content.isEmpty())
+        {
+            Toast.makeText(this, "Please load CSV file before finding fusion results.", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            status = true;
+        }
+        return status;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

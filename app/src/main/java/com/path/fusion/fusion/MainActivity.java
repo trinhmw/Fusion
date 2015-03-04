@@ -25,7 +25,7 @@ public class MainActivity extends ActionBarActivity {
     private final String NO_FILE = "There is no CSV file loaded.";
     Button mOpenFileButton;
     Button mLoadFileButton;
-    Button mClearDataButton;
+//    Button mClearDataButton;
     Button mFusionButton;
     Button mPathButton;
 //    Button mGenerateEdgesButton;
@@ -65,15 +65,15 @@ public class MainActivity extends ActionBarActivity {
         };
         mLoadFileButton.setOnClickListener(loadFileOnClickListener);
 
-        mClearDataButton = (Button) findViewById(R.id.clearDataButton);
-        View.OnClickListener clearDataOnClickListener = new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                fileManager.deleteFile();
-                Toast.makeText(getApplicationContext(), "Data deleted.", Toast.LENGTH_SHORT).show();
-            }
-        };
-        mClearDataButton.setOnClickListener(clearDataOnClickListener);
+//        mClearDataButton = (Button) findViewById(R.id.clearDataButton);
+//        View.OnClickListener clearDataOnClickListener = new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                fileManager.deleteFile();
+//                Toast.makeText(getApplicationContext(), "Data deleted.", Toast.LENGTH_SHORT).show();
+//            }
+//        };
+//        mClearDataButton.setOnClickListener(clearDataOnClickListener);
 
         mFusionButton = (Button) findViewById(R.id.fusionButton);
         View.OnClickListener fusionOnClickListener = new View.OnClickListener(){
@@ -116,13 +116,14 @@ public class MainActivity extends ActionBarActivity {
         if(validFile(csvPath)) {
             CSVReader reader = new CSVReader(new FileReader(csvPath), ',', ';', 1);
             String[] nextLine;
+            Toast.makeText(getApplicationContext(), "Loading file...", Toast.LENGTH_SHORT).show();
             while ((nextLine = reader.readNext()) != null) {
                 fileManager.addToMap(nextLine[0], nextLine[1], nextLine[2]);
                 Log.d("OutputMainActivity", fileManager.getValue(nextLine[0], nextLine[1]));
             }
             fileManager.uniqueStringToVertexSet();
-            Toast.makeText(getApplicationContext(), "Data Storage complete.", Toast.LENGTH_SHORT).show();
-            Toast.makeText(getApplicationContext(), "Generating Edges.", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Data Storage complete.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Generating Edges...", Toast.LENGTH_SHORT).show();
             fileManager.generateAllEdges();
             Toast.makeText(getApplicationContext(), "Load complete.", Toast.LENGTH_SHORT).show();
         }

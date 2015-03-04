@@ -14,10 +14,14 @@
     <string name="result">Fusion Result</string>
     <string name="getResult">Get Fusion Result</string>
     <string name="cat">Fusion Material</string>
-    <string name="desiredResult">Desired Fusion Result</string>
-    <string name="shortest">Shortest Path</string>
-    <string name="getShortest">Get Path</string>
+    <string name="targetCat">Target Fusion Material</string>
+    <string name="targetResult">Target Fusion Result</string>
+    <string name="shortest">Path Finder</string>
+    <string name="targetPath">Target Path</string>
+    <string name="altPath">Get Path</string>
     <string name="title_activity_fusion">Fusion</string>
     <string name="title_activity_path">Fusion Path Finder</string>
+    <string name="clearPath">Clear Target Path</string>
+    <string name="clearAltPath">Clear Path</string>
 
 </resources>

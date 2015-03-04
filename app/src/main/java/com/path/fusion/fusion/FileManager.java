@@ -46,21 +46,21 @@ public class FileManager {
     public static FileManager getInstance(){
         if(instance == null){
             instance = new FileManager();
-            file = new File(Environment.getExternalStorageDirectory(), fileName);
-            fileUnique = new File(Environment.getExternalStorageDirectory(), fileNameUnique);
-            fileEdge = new File(Environment.getExternalStorageDirectory(), fileNameEdges);
-            fileUniqueHash = new File(Environment.getExternalStorageDirectory(), fileNameHash);
-            file2 = new File(Environment.getExternalStorageDirectory(), fileName2);
-            try {
-                file.createNewFile();
-                fileUnique.createNewFile();
-                fileEdge.createNewFile();
-                fileUniqueHash.createNewFile();
-                file2.createNewFile();
-                openFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            file = new File(Environment.getExternalStorageDirectory(), fileName);
+//            fileUnique = new File(Environment.getExternalStorageDirectory(), fileNameUnique);
+//            fileEdge = new File(Environment.getExternalStorageDirectory(), fileNameEdges);
+//            fileUniqueHash = new File(Environment.getExternalStorageDirectory(), fileNameHash);
+//            file2 = new File(Environment.getExternalStorageDirectory(), fileName2);
+//            try {
+//                file.createNewFile();
+//                fileUnique.createNewFile();
+//                fileEdge.createNewFile();
+//                fileUniqueHash.createNewFile();
+//                file2.createNewFile();
+//                openFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
         return instance;
     }
@@ -164,8 +164,7 @@ public class FileManager {
         uniqueString.add(pairLeft);
         uniqueString.add(pairRight);
         uniqueString.add(value);
-//        uniqueSet.add(value);
-        writeFile();
+//        writeFile();
     }
 
     /**
@@ -179,7 +178,7 @@ public class FileManager {
             uniqueSet.add(v);
             uniqueHash.put(name, v);
         }
-        writeFile();
+//        writeFile();
     }
 
     /**
@@ -222,7 +221,7 @@ public class FileManager {
             generateEdge(vertex);
         }
         Log.d("generateAllEdges", "Generate all edges complete");
-        writeFile();
+//        writeFile();
     }
 
     /**

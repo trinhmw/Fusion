@@ -14,42 +14,103 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/cat"
-            android:id="@+id/categoryTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"/>
+            android:orientation="horizontal">
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/categorySpinner"
-            android:layout_below="@+id/categoryTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/normal_text"
+                    android:text="@string/targetCat"
+                    android:id="@+id/categoryTextView"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/categorySpinner"
+                    android:layout_below="@+id/categoryTextView"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/result"
-            android:id="@+id/resultTextView"
-            android:layout_below="@+id/categorySpinner"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/normal_text"
+                    android:text="@string/targetResult"
+                    android:id="@+id/resultTextView"
+                    android:layout_below="@+id/categorySpinner"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/resultSpinner"
-            android:layout_below="@+id/resultTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/resultSpinner"
+                    android:layout_below="@+id/resultTextView"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/normal_text"
+                    android:text="@string/cat"
+                    android:id="@+id/categoryTextView2"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/categorySpinner2"
+                    android:layout_below="@+id/categoryTextView2"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/normal_text"
+                    android:text="@string/result"
+                    android:id="@+id/resultTextView2"
+                    android:layout_below="@+id/categorySpinner2"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/resultSpinner2"
+                    android:layout_below="@+id/resultTextView2"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,7 +119,7 @@
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/getShortest"
+                android:text="@string/targetPath"
                 android:id="@+id/pathButton"
                 android:layout_below="@+id/resultSpinner"
                 android:layout_alignParentLeft="true"
@@ -68,7 +129,7 @@
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/getShortest"
+                android:text="@string/altPath"
                 android:id="@+id/altPathButton"
                 android:layout_below="@+id/resultSpinner"
                 android:layout_alignParentLeft="true"
@@ -76,6 +137,30 @@
                 android:layout_weight="1"/>
 
             </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/clearPath"
+                android:id="@+id/clearPathButton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/clearAltPath"
+                android:id="@+id/clearAltPathButton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

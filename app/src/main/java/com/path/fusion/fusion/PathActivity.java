@@ -21,8 +21,12 @@ public class PathActivity extends ActionBarActivity {
     FileManager fileManager;
     Button mPathButton;
     Button mAltPathButton;
+    Button mClearPathButton;
+    Button mClearAltPathButton;
     Spinner mCategorySpinner;
     Spinner mResultSpinner;
+    Spinner mCategorySpinner2;
+    Spinner mResultSpinner2;
     TextView mTextView;
     TextView mAltTextView;
     @Override
@@ -34,8 +38,12 @@ public class PathActivity extends ActionBarActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, fileManager.getUnique());
         mCategorySpinner = (Spinner) findViewById(R.id.categorySpinner);
         mResultSpinner = (Spinner) findViewById(R.id.resultSpinner);
+        mCategorySpinner2 = (Spinner) findViewById(R.id.categorySpinner2);
+        mResultSpinner2 = (Spinner) findViewById(R.id.resultSpinner2);
         mCategorySpinner.setAdapter(adapter);
         mResultSpinner.setAdapter(adapter);
+        mCategorySpinner2.setAdapter(adapter);
+        mResultSpinner2.setAdapter(adapter);
 
         mTextView = (TextView) findViewById(R.id.textView);
         mTextView.setMovementMethod(new ScrollingMovementMethod());
@@ -45,7 +53,7 @@ public class PathActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 mAltTextView.setText("");
-                findPath(mTextView, false);
+                findPath(mTextView, false, mCategorySpinner,mResultSpinner);
             }
         };
         mPathButton.setOnClickListener(pathOnClickListener);
@@ -57,10 +65,29 @@ public class PathActivity extends ActionBarActivity {
         View.OnClickListener altPathOnClickListener = new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                findPath(mAltTextView, true);
+                findPath(mAltTextView, true, mCategorySpinner2,mResultSpinner2);
             }
         };
         mAltPathButton.setOnClickListener(altPathOnClickListener);
+
+
+        mClearPathButton = (Button) findViewById(R.id.clearPathButton);
+        View.OnClickListener clearPathOnClickListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                mTextView.setText("");
+            }
+        };
+        mClearPathButton.setOnClickListener(clearPathOnClickListener);
+
+        mClearAltPathButton = (Button) findViewById(R.id.clearAltPathButton);
+        View.OnClickListener clearAltPathOnClickListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                mAltTextView.setText("");
+            }
+        };
+        mClearAltPathButton.setOnClickListener(clearAltPathOnClickListener);
     }
 
     /**
@@ -69,13 +96,13 @@ public class PathActivity extends ActionBarActivity {
      * @param textView
      * @param append
      */
-    public void findPath(TextView textView, boolean append){
+    public void findPath(TextView textView, boolean append, Spinner spinnerCat, Spinner spinnerRes){
         if (validSpinner(fileManager.getUnique())) {
             PathAlgorithm pathAlgorithm = new PathAlgorithm();
             ArrayList<Vertex> ingredient = new ArrayList<>();
             ArrayList<Vertex> result = new ArrayList<>();
-            String selection1 = mCategorySpinner.getSelectedItem().toString();
-            String selection2 = mResultSpinner.getSelectedItem().toString();
+            String selection1 = spinnerCat.getSelectedItem().toString();
+            String selection2 = spinnerRes.getSelectedItem().toString();
             Pair<String, String> pair;
             pathAlgorithm.execute(fileManager.getUniqueHash().get(selection1));
             LinkedList<Vertex> path = pathAlgorithm.getPath(fileManager.getUniqueHash().get(selection2));
@@ -97,7 +124,7 @@ public class PathActivity extends ActionBarActivity {
 
                     result.add(vertex);
                     textView.append(vertex.getName());
-                    Log.d("PathActivity", vertex.getName());
+//                    Log.d("PathActivity", vertex.getName());
                     i++;
                 }
             }

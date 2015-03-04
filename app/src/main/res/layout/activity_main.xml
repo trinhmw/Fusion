@@ -13,62 +13,66 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
-        <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/open"
-        android:id="@+id/openFileButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_weight="1"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/open"
+                android:id="@+id/openFileButton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"
+                android:textSize="@dimen/button_large_text"/>
 
-        <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/load"
-        android:id="@+id/loadFileButton"
-        android:layout_below="@+id/openFileButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_weight="1"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/load"
+                android:id="@+id/loadFileButton"
+                android:layout_below="@+id/openFileButton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"
+                android:textSize="@dimen/button_large_text"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/clear"
-            android:id="@+id/clearDataButton"
-            android:layout_below="@+id/loadFileButton"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_weight="1"/>
+            <!--<Button-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/clear"-->
+                <!--android:id="@+id/clearDataButton"-->
+                <!--android:layout_below="@+id/loadFileButton"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_weight="1"/>-->
 
-        <!--<Button-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/generate"-->
-            <!--android:id="@+id/generateEdgesButton"-->
-            <!--android:layout_below="@+id/clearDataButton"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_alignParentStart="true" />-->
+            <!--<Button-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/generate"-->
+                <!--android:id="@+id/generateEdgesButton"-->
+                <!--android:layout_below="@+id/clearDataButton"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_alignParentStart="true" />-->
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/result"
-            android:id="@+id/fusionButton"
-            android:layout_below="@+id/generateEdgesButton"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_weight="1"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/result"
+                android:id="@+id/fusionButton"
+                android:layout_below="@+id/generateEdgesButton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"
+                android:textSize="@dimen/button_large_text"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/shortest"
-            android:id="@+id/pathButton"
-            android:layout_below="@+id/fusionButton"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_weight="1"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/shortest"
+                android:id="@+id/pathButton"
+                android:layout_below="@+id/fusionButton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"
+                android:textSize="@dimen/button_large_text"/>
     </LinearLayout>
 </ScrollView>

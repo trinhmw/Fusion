@@ -50,18 +50,23 @@ public class PathActivity extends ActionBarActivity {
                 LinkedList<Vertex> ingredientPath = null;
                 mTextView.setText("");
                 int i = 0;
-                for(Vertex vertex : path){
-                    if(i != 0) {
-                        mTextView.append(" + " + fileManager.getMaterial(result.get(i-1).getName(),vertex.getName()) + "=" + vertex.getName() + "\n");
-                    }
-                    if(i == 0){
-                        mTextView.append(vertex.getName() + "\n");
-                    }
+                if (path == null){
+                    mTextView.append("There is no existing path.");
+                }
+                else {
+                    for (Vertex vertex : path) {
+                        if (i != 0) {
+                            mTextView.append(" + " + fileManager.getMaterial(result.get(i - 1).getName(), vertex.getName()) + "=" + vertex.getName() + "\n");
+                        }
+                        if (i == 0) {
+                            mTextView.append(vertex.getName() + "\n");
+                        }
 
-                    result.add(vertex);
-                    mTextView.append(vertex.getName());
-                    Log.d("PathActivity", vertex.getName());
-                    i++;
+                        result.add(vertex);
+                        mTextView.append(vertex.getName());
+                        Log.d("PathActivity", vertex.getName());
+                        i++;
+                    }
                 }
             }
         };

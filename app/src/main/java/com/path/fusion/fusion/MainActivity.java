@@ -22,6 +22,7 @@ public class MainActivity extends ActionBarActivity {
     private static final int REQUEST_CODE = 4841;
     private static final String TAG = "MainActivity";
     private static String csvPath = null;
+    private final String NO_FILE = "There is no CSV file loaded.";
     Button mOpenFileButton;
     Button mLoadFileButton;
     Button mClearDataButton;
@@ -54,17 +55,6 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 try {
                     loadFile();
-//                    CSVReader reader = new CSVReader(new FileReader(csvPath), ',', ';', 1);
-//                    String [] nextLine;
-//                    while ((nextLine = reader.readNext()) != null){
-//                        fileManager.addToMap(nextLine[0],nextLine[1],nextLine[2]);
-//                        Log.d("OutputMainActivity",fileManager.getValue(nextLine[0],nextLine[1]));
-//                    }
-//                    fileManager.uniqueStringToVertexSet();
-//                    Toast.makeText(getApplicationContext(), "Data Storage complete.", Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(getApplicationContext(), "Generating Edges.", Toast.LENGTH_SHORT).show();
-//                    fileManager.generateAllEdges();
-//                    Toast.makeText(getApplicationContext(), "Load complete.", Toast.LENGTH_SHORT).show();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -111,27 +101,60 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 fileManager.generateAllEdges();
-//                fileManager.generateEdge(fileManager.getUniqueHash().get("Aquans"));
             }
         };
         mGenerateEdgesButton.setOnClickListener(generateOnClickListener);
 
     }
 
+    /**
+     * loadFile - Reads the path to the CSV file and uses the File Manager to save the data onto the Android External Storage.
+     * This stores data, and then generates the links/relations between the data.
+     * @throws IOException
+     */
     private void loadFile() throws IOException {
-        CSVReader reader = new CSVReader(new FileReader(csvPath), ',', ';', 1);
-        String [] nextLine;
-        while ((nextLine = reader.readNext()) != null){
-            fileManager.addToMap(nextLine[0],nextLine[1],nextLine[2]);
-            Log.d("OutputMainActivity",fileManager.getValue(nextLine[0],nextLine[1]));
+        if(validFile(csvPath)) {
+            CSVReader reader = new CSVReader(new FileReader(csvPath), ',', ';', 1);
+            String[] nextLine;
+            while ((nextLine = reader.readNext()) != null) {
+                fileManager.addToMap(nextLine[0], nextLine[1], nextLine[2]);
+                Log.d("OutputMainActivity", fileManager.getValue(nextLine[0], nextLine[1]));
+            }
+            fileManager.uniqueStringToVertexSet();
+            Toast.makeText(getApplicationContext(), "Data Storage complete.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Generating Edges.", Toast.LENGTH_SHORT).show();
+            fileManager.generateAllEdges();
+            Toast.makeText(getApplicationContext(), "Load complete.", Toast.LENGTH_SHORT).show();
         }
-        fileManager.uniqueStringToVertexSet();
-        Toast.makeText(getApplicationContext(), "Data Storage complete.", Toast.LENGTH_SHORT).show();
-        Toast.makeText(getApplicationContext(), "Generating Edges.", Toast.LENGTH_SHORT).show();
-        fileManager.generateAllEdges();
-        Toast.makeText(getApplicationContext(), "Load complete.", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * validFile - Checks whether the csvPath is an actual CSV or has even been loaded.
+     * @param csvPath
+     * @return
+     */
+    private boolean validFile(String csvPath){
+        boolean status = false;
+        if(csvPath == null){
+            Toast.makeText(getApplicationContext(), "There is no file loaded.", Toast.LENGTH_SHORT).show();
+        }
+        else if((csvPath.equals("")) || csvPath.isEmpty()){
+            Toast.makeText(getApplicationContext(), "There is no file loaded.", Toast.LENGTH_SHORT).show();
+        }
+        else if(!(((csvPath.substring(csvPath.lastIndexOf('.'))).equals(".csv")) ||
+        (csvPath.substring(csvPath.lastIndexOf('.'))).equals(".CSV"))){
+            Toast.makeText(getApplicationContext(), "Wrong file type loaded.", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            status = true;
+        }
+        return status;
+    }
+
+    /**
+     * showChooser - Shows the file chooser.
+     */
     private void showChooser() {
         // Use the GET_CONTENT intent from the utility class
         Intent target = FileUtils.createGetContentIntent();

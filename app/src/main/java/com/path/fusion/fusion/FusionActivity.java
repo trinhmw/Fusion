@@ -8,11 +8,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 
 public class FusionActivity extends ActionBarActivity {
     Spinner mCategory1Spinner;
     Spinner mCategory2Spinner;
+    TextView mTextview;
     Button mFusionButton;
     private FileManager fileManager;
 
@@ -28,12 +30,20 @@ public class FusionActivity extends ActionBarActivity {
         mCategory1Spinner.setAdapter(adapter);
         mCategory2Spinner.setAdapter(adapter);
 
+        mTextview = (TextView) findViewById(R.id.textView);
+
         mFusionButton = (Button) findViewById(R.id.fusionButton);
         View.OnClickListener resultOnClickListener = new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 String result = fileManager.getValue(mCategory1Spinner.getSelectedItem().toString(), mCategory2Spinner.getSelectedItem().toString());
-                mFusionButton.setText(result);
+                if(result == null)
+                {
+                 mTextview.setText("No information available.");
+                }
+                else {
+                    mTextview.setText(result);
+                }
             }
         };
         mFusionButton.setOnClickListener(resultOnClickListener);

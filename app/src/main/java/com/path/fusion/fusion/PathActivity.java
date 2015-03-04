@@ -2,20 +2,85 @@ package com.path.fusion.fusion;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class PathActivity extends ActionBarActivity {
     FileManager fileManager;
     Button mPathButton;
-
+    Spinner mCategorySpinner;
+    Spinner mResultSpinner;
+    TextView mTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_path);
         fileManager = FileManager.getInstance();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, fileManager.getUnique());
+        mCategorySpinner = (Spinner) findViewById(R.id.categorySpinner);
+        mResultSpinner = (Spinner) findViewById(R.id.resultSpinner);
+        mCategorySpinner.setAdapter(adapter);
+        mResultSpinner.setAdapter(adapter);
+
+        mTextView = (TextView) findViewById(R.id.textView);
+
+        mPathButton = (Button) findViewById(R.id.pathButton);
+        View.OnClickListener pathOnClickListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                PathAlgorithm pathAlgorithm = new PathAlgorithm();
+                ArrayList<Vertex> ingredient = new ArrayList<>();
+                ArrayList<Vertex> result = new ArrayList<>();
+                String selection1 = mCategorySpinner.getSelectedItem().toString();
+                String selection2 = mResultSpinner.getSelectedItem().toString();
+                Pair<String,String> pair;
+                pathAlgorithm.execute(fileManager.getUniqueHash().get(selection1));
+                LinkedList<Vertex> path = pathAlgorithm.getPath(fileManager.getUniqueHash().get(selection2));
+                LinkedList<Vertex> ingredientPath = null;
+                mTextView.setText("");
+                int i = 0;
+                for(Vertex vertex : path){
+                    if(i != 0) {
+//                        mTextView.append();
+                    }
+                    result.add(vertex);
+                    mTextView.append(vertex.getName() + "\n");
+                    Log.d("PathActivity", vertex.getName());
+                }
+
+//                for(int i = 0;i<result.size()-1;i++){
+//                   pathAlgorithm.execute(result.get(i));
+//                   ingredientPath = pathAlgorithm.getPath(result.get(i+1));
+//                }
+//                for(Vertex vertex : ingredientPath){
+//                    ingredient.add(vertex);
+//                    Log.d("PathActivity", vertex.getName());
+//                }
+//                for(int i = 0;i<result.size()-1;i++){
+//                    mTextView.append(result.get(i).getName() + "->");
+//                    if(i >= ingredient.size()-1){}
+//                    else {
+//                        mTextView.append(ingredient.get(i).getName() + "=");
+//                    }
+//                    mTextView.append(result.get(i+1).getName());
+//                }
+            }
+        };
+        mPathButton.setOnClickListener(pathOnClickListener);
+
+
+
     }
 
 

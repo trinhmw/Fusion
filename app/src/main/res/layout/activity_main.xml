@@ -31,13 +31,21 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/generate"
+        android:id="@+id/generateEdgesButton"
+        android:layout_below="@+id/clearDataButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/result"
         android:id="@+id/fusionButton"
-        android:layout_below="@+id/clearDataButton"
+        android:layout_below="@+id/generateEdgesButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

@@ -1,6 +1,7 @@
 package com.path.fusion.fusion;
 
 import android.os.Environment;
+import android.util.Log;
 import android.util.Pair;
 
 import java.io.File;
@@ -11,7 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -20,13 +21,20 @@ import java.util.TreeSet;
  */
 public class FileManager {
 
-    private static HashMap<Pair<String,String>, String> fusionList = new HashMap<Pair<String, String>, String>();
-    private static Set<String> uniqueSet = new TreeSet<String>();
+    private static HashMap<Pair<String,String>, String> fusionList = new HashMap<>();
+    private static HashMap<String, Vertex> uniqueHash = new HashMap<>();
+    private static List<Edge> edges = new ArrayList<>();
+    private static Set<Vertex> uniqueSet = new TreeSet<>();
+    private static Set<String> uniqueString = new TreeSet<>();
     private static FileManager instance = null;
     private static File file;
     private static File fileUnique;
+    private static File fileEdge;
+    private static File fileUniqueHash;
     private static String fileName = "/fusionData.dat";
     private static String fileNameUnique = "/fusionUnique.dat";
+    private static String fileNameEdges = "/fusionEdge.dat";
+    private static String fileNameHash = "/fusionUniqueHash.dat";
 
 
     protected FileManager(){
@@ -37,9 +45,13 @@ public class FileManager {
             instance = new FileManager();
             file = new File(Environment.getExternalStorageDirectory(), fileName);
             fileUnique = new File(Environment.getExternalStorageDirectory(), fileNameUnique);
+            fileEdge = new File(Environment.getExternalStorageDirectory(), fileNameEdges);
+            fileUniqueHash = new File(Environment.getExternalStorageDirectory(), fileNameHash);
             try {
                 file.createNewFile();
                 fileUnique.createNewFile();
+                fileEdge.createNewFile();
+                fileUniqueHash.createNewFile();
                 openFile();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -57,7 +69,15 @@ public class FileManager {
             ois.close();
 
             ois = new ObjectInputStream(new FileInputStream(fileUnique));
-            uniqueSet = (TreeSet<String>) ois.readObject();
+            uniqueSet = (TreeSet<Vertex>) ois.readObject();
+            ois.close();
+
+            ois = new ObjectInputStream(new FileInputStream(fileEdge));
+            edges = (ArrayList<Edge>) ois.readObject();
+            ois.close();
+
+            ois = new ObjectInputStream(new FileInputStream(fileUniqueHash));
+            uniqueHash = (HashMap<String, Vertex>) ois.readObject();
             ois.close();
 
         } catch (ClassNotFoundException e) {
@@ -78,6 +98,16 @@ public class FileManager {
             oos.writeObject(uniqueSet);
             oos.flush();
             oos.close();
+
+            oos = new ObjectOutputStream(new FileOutputStream(fileEdge));
+            oos.writeObject(edges);
+            oos.flush();
+            oos.close();
+
+            oos = new ObjectOutputStream(new FileOutputStream(fileUniqueHash));
+            oos.writeObject(uniqueHash);
+            oos.flush();
+            oos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,15 +115,72 @@ public class FileManager {
     }
 
     public ArrayList<String> getUnique(){
-        return new ArrayList<String>(uniqueSet);
+        ArrayList<String> stringUnique = new ArrayList<String>();
+        for(Vertex item : uniqueSet){
+            stringUnique.add(item.getName());
+        }
+        return new ArrayList<String>(stringUnique);
     }
 
     public void addToMap(String pairLeft, String pairRight, String value){
         fusionList.put(new Pair(pairLeft, pairRight), value);
-        uniqueSet.add(pairLeft);
-        uniqueSet.add(pairRight);
+        uniqueString.add(pairLeft);
+        uniqueString.add(pairRight);
+        uniqueString.add(value);
 //        uniqueSet.add(value);
         writeFile();
+    }
+
+    public void uniqueStringToVertexSet(){
+        Vertex v;
+        for(String name : uniqueString){
+            Log.d("uniqueStringToVertexSet",name);
+            v = new Vertex(name,name);
+            uniqueSet.add(v);
+            uniqueHash.put(name, v);
+        }
+        writeFile();
+    }
+
+    public void generateEdge(Vertex source){
+        String id;
+        String destination;
+        Vertex vertexDestination;
+        Edge e;
+        int weight = 1;
+        for(Vertex next : uniqueSet){
+//            destination = fusionList.get(new Pair(source.getName(),next.getName()));
+//            id = source.getName() + "_" + destination;
+            //If this combination exists
+            if(
+                (fusionList.containsKey(new Pair(source.getName(), next.getName()))) &&
+                (fusionList.get(new Pair(source.getName(),next.getName())) != null) &&
+                !(fusionList.get(new Pair(source.getName(),next.getName())).equals(""))) {
+//                    id = source.getName() + "_" + next.getName();
+//                    Log.d("generateEdge", id);
+//                    e = new Edge(id, source, next, weight);
+//                    edges.add(e);
+
+                    destination = fusionList.get(new Pair(source.getName(),next.getName()));
+                    vertexDestination = uniqueHash.get(destination);
+                    id = next.getName() + "_" + vertexDestination.getName();
+//                    Log.d("generateEdge", id);
+                    e = new Edge(id, source, vertexDestination, weight);
+                    edges.add(e);
+            }
+        }
+    }
+
+    public void generateAllEdges(){
+        for (Vertex vertex : uniqueSet){
+            generateEdge(vertex);
+        }
+        Log.d("generateAllEdges", "Generate all edges complete");
+        writeFile();
+    }
+
+    public static List<Edge> getEdges() {
+        return edges;
     }
 
     public String getValue(String pairLeft, String pairRight){
@@ -107,41 +194,23 @@ public class FileManager {
     public void deleteFile(){
         file.delete();
         fileUnique.delete();
-    }
-
-    public ArrayList<String> generatePaths(String initial, String result){
-        Set<String> settledNodes = new HashSet<String>(getUnique());
-        Set<String> unsettledNodes = new HashSet<String>(getUnique());
-        HashMap<String, Integer> distance = new HashMap<String, Integer>();
-        HashMap<String,String> predecessors = new HashMap<String, String>();
-
-        distance.put(initial, 0);
-        while(unsettledNodes.size() > 0){
-            String node = getMinimum(unsettledNodes);
-            settledNodes.add(node);
-            unsettledNodes.remove(node);
-            findMinimalDistance(node);
-        }
-        return new ArrayList<String>();
-    }
-
-    private String getMinimum(Set<String> unsettledNodes){
-        return null;
-    }
-
-    private void findMinimalDistance(String node){
-
+        fileEdge.delete();
+        fileUniqueHash.delete();
     }
 
     public HashMap<Pair<String, String>, String> getFusionList() {
         return fusionList;
     }
 
-    public void setFusionList(HashMap<Pair<String, String>, String> fusionList) {
+    private void setFusionList(HashMap<Pair<String, String>, String> fusionList) {
         this.fusionList = fusionList;
     }
 
-    public static void setInstance(FileManager instance) {
+    public static HashMap<String, Vertex> getUniqueHash() {
+        return uniqueHash;
+    }
+
+    private static void setInstance(FileManager instance) {
         FileManager.instance = instance;
     }
 
@@ -149,7 +218,7 @@ public class FileManager {
         return file;
     }
 
-    public static void setFile(File file) {
+    private static void setFile(File file) {
         FileManager.file = file;
     }
 
@@ -157,15 +226,19 @@ public class FileManager {
         return fileName;
     }
 
-    public static void setFileName(String fileName) {
+    private static void setFileName(String fileName) {
         FileManager.fileName = fileName;
     }
 
-    public static Set<String> getUniqueSet() {
+    public static Set<Vertex> getUniqueSet() {
         return uniqueSet;
     }
 
-    public static void setUniqueSet(Set<String> uniqueSet) {
+    public static ArrayList<Vertex> getUniqueArrayList() {
+        return new ArrayList<Vertex>(uniqueSet);
+    }
+
+    private static void setUniqueSet(Set<Vertex> uniqueSet) {
         FileManager.uniqueSet = uniqueSet;
     }
 
@@ -173,7 +246,7 @@ public class FileManager {
         return fileUnique;
     }
 
-    public static void setFileUnique(File fileUnique) {
+    private static void setFileUnique(File fileUnique) {
         FileManager.fileUnique = fileUnique;
     }
 
@@ -181,7 +254,9 @@ public class FileManager {
         return fileNameUnique;
     }
 
-    public static void setFileNameUnique(String fileNameUnique) {
+    private static void setFileNameUnique(String fileNameUnique) {
         FileManager.fileNameUnique = fileNameUnique;
     }
+
+
 }

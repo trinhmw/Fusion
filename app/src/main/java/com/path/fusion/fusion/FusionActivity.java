@@ -28,7 +28,7 @@ public class FusionActivity extends ActionBarActivity {
         setContentView(R.layout.activity_fusion);
         fileManager = FileManager.getInstance();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, fileManager.getUnique());
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, fileManager.getUnique());
         mCategory1Spinner = (Spinner) findViewById(R.id.category1Spinner);
         mCategory2Spinner = (Spinner) findViewById(R.id.category2Spinner);
         mCategory1Spinner.setAdapter(adapter);

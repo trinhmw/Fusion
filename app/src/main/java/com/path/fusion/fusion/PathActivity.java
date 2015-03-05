@@ -34,8 +34,8 @@ public class PathActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_path);
         fileManager = FileManager.getInstance();
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, fileManager.getUnique());
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, fileManager.getUnique());
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, fileManager.getUnique());
         mCategorySpinner = (Spinner) findViewById(R.id.categorySpinner);
         mResultSpinner = (Spinner) findViewById(R.id.resultSpinner);
         mCategorySpinner2 = (Spinner) findViewById(R.id.categorySpinner2);

@@ -13,6 +13,8 @@
         <item name="android:textColorSecondary">@color/secondary</item>
         <item name="android:textColorTertiary">@color/tertiary</item>
 
+        <item name="android:background">@color/black</item>
+
         <!-- set default widget styles -->
         <item name="android:buttonStyle">@style/Button</item>
         <!--<item name="Widget.Button.Small"></item>-->

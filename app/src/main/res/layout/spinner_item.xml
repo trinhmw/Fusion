@@ -8,7 +8,6 @@
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:textAppearance="?android:attr/textAppearanceListItem"
     android:padding="5dip"
-    android:gravity="center_vertical"
-    android:textSize="@dimen/normal_text"/>
+    android:gravity="center_vertical"/>
 
     <!--android:paddingStart="?android:attr/expandableListPreferredItemPaddingLeft"-->

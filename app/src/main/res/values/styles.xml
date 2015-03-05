@@ -15,9 +15,10 @@
 
         <item name="android:background">@color/black</item>
 
+
         <!-- set default widget styles -->
         <item name="android:buttonStyle">@style/Button</item>
-        <!--<item name="Widget.Button.Small"></item>-->
+        <item name="android:textViewStyle">@style/TextView</item>
     </style>
 
     <style name="Button" parent="android:style/Widget.Button">
@@ -26,6 +27,10 @@
         <item name="android:clickable">true</item>
         <item name="android:textColor">@drawable/selector_button_text</item>
         <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+
+    <style name="TextView" parent="android:style/Widget.TextView">
+        <item name="android:textSize">@dimen/normal_text</item>
     </style>
 
 </resources>

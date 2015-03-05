@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
             <Button
@@ -18,21 +18,18 @@
                 android:layout_height="wrap_content"
                 android:text="@string/open"
                 android:id="@+id/openFileButton"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_weight="1"
-                android:textSize="@dimen/button_large_text"/>
+                android:textSize="@dimen/button_large_text"
+                android:layout_margin="10dp"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/load"
                 android:id="@+id/loadFileButton"
-                android:layout_below="@+id/openFileButton"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_weight="1"
-                android:textSize="@dimen/button_large_text"/>
+                android:textSize="@dimen/button_large_text"
+                android:layout_margin="10dp"/>
 
             <!--<Button-->
                 <!--android:layout_width="match_parent"-->
@@ -58,21 +55,17 @@
                 android:layout_height="wrap_content"
                 android:text="@string/result"
                 android:id="@+id/fusionButton"
-                android:layout_below="@+id/generateEdgesButton"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_weight="1"
-                android:textSize="@dimen/button_large_text"/>
+                android:textSize="@dimen/button_large_text"
+                android:layout_margin="10dp"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/shortest"
                 android:id="@+id/pathButton"
-                android:layout_below="@+id/fusionButton"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_weight="1"
-                android:textSize="@dimen/button_large_text"/>
+                android:textSize="@dimen/button_large_text"
+                android:layout_margin="10dp"/>
     </LinearLayout>
 </ScrollView>

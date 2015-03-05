@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
@@ -31,17 +31,12 @@
                     android:textSize="@dimen/normal_text"
                     android:text="@string/targetCat"
                     android:id="@+id/categoryTextView"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
                     android:layout_marginTop="10dp"/>
 
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/categorySpinner"
-                    android:layout_below="@+id/categoryTextView"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:id="@+id/categorySpinner" />
 
 
                 <TextView
@@ -49,18 +44,12 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/normal_text"
                     android:text="@string/targetResult"
-                    android:id="@+id/resultTextView"
-                    android:layout_below="@+id/categorySpinner"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:id="@+id/resultTextView" />
 
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/resultSpinner"
-                    android:layout_below="@+id/resultTextView"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:id="@+id/resultSpinner" />
 
                 </LinearLayout>
             <LinearLayout
@@ -75,17 +64,12 @@
                     android:textSize="@dimen/normal_text"
                     android:text="@string/cat"
                     android:id="@+id/categoryTextView2"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
                     android:layout_marginTop="10dp"/>
 
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/categorySpinner2"
-                    android:layout_below="@+id/categoryTextView2"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:id="@+id/categorySpinner2" />
 
 
                 <TextView
@@ -93,18 +77,12 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/normal_text"
                     android:text="@string/result"
-                    android:id="@+id/resultTextView2"
-                    android:layout_below="@+id/categorySpinner2"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:id="@+id/resultTextView2"/>
 
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/resultSpinner2"
-                    android:layout_below="@+id/resultTextView2"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:id="@+id/resultSpinner2"/>
 
                 </LinearLayout>
 
@@ -121,21 +99,16 @@
                 android:layout_height="wrap_content"
                 android:text="@string/targetPath"
                 android:id="@+id/pathButton"
-                android:layout_below="@+id/resultSpinner"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="5dp"/>
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/altPath"
                 android:id="@+id/altPathButton"
-                android:layout_below="@+id/resultSpinner"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_weight="1"/>
-
+                android:layout_weight="1"
+                android:layout_margin="5dp"/>
             </LinearLayout>
 
         <LinearLayout
@@ -147,19 +120,16 @@
                 android:layout_height="wrap_content"
                 android:text="@string/clearPath"
                 android:id="@+id/clearPathButton"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="5dp"/>
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/clearAltPath"
                 android:id="@+id/clearAltPathButton"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_weight="1"/>
-
+                android:layout_weight="1"
+                android:layout_margin="5dp"/>
         </LinearLayout>
 
             <LinearLayout
@@ -170,9 +140,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/textView"
-                android:layout_below="@+id/pathButton"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_marginTop="@dimen/custom_margin"
                 android:textSize="@dimen/normal_text"
                 android:layout_weight="1"
@@ -182,15 +149,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/altTextView"
-                android:layout_below="@+id/altPathButton"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_marginTop="@dimen/custom_margin"
                 android:textSize="@dimen/normal_text"
                 android:layout_weight="1"
                 android:scrollbars="vertical"
                 android:minHeight="@dimen/min_text_space"/>
             </LinearLayout>
-
     </LinearLayout>
 </ScrollView>

@@ -5,5 +5,5 @@
     <dimen name="normal_text">17sp</dimen>
     <dimen name="min_text_space">50dp</dimen>
     <dimen name="custom_margin">20dp</dimen>
-    <dimen name="button_large_text">25sp</dimen>
+    <dimen name="button_large_text">20sp</dimen>
 </resources>

@@ -1,8 +1,13 @@
-package com.path.fusion.fusion;
+package com.path.fusion.fusion.Activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +19,9 @@ import android.widget.Toast;
 
 import com.ipaulpro.afilechooser.utils.FileUtils;
 import com.opencsv.CSVReader;
+import com.path.fusion.fusion.Controller.FileManager;
+import com.path.fusion.fusion.R;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -37,6 +45,11 @@ public class MainActivity extends ActionBarActivity {
         fileManager = FileManager.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setIcon(R.drawable.ic_launcher);
+        }
         mOpenFileButton = (Button) findViewById(R.id.openFileButton);
 
 
@@ -114,18 +127,22 @@ public class MainActivity extends ActionBarActivity {
      */
     private void loadFile() throws IOException {
         if(validFile(csvPath)) {
+            Dialog mDialog = new Dialog(MainActivity.this);
             CSVReader reader = new CSVReader(new FileReader(csvPath), ',', ';', 1);
             String[] nextLine;
-            Toast.makeText(getApplicationContext(), "Loading file...", Toast.LENGTH_SHORT).show();
+            mDialog.setTitle("Load file complete.");
+//            mDialog.setContentView(R.layout.load_file);
+//            Toast.makeText(getApplicationContext(), "Loading file...", Toast.LENGTH_SHORT).show();
             while ((nextLine = reader.readNext()) != null) {
                 fileManager.addToMap(nextLine[0], nextLine[1], nextLine[2]);
-                Log.d("OutputMainActivity", fileManager.getValue(nextLine[0], nextLine[1]));
+                Log.d("OutputMainActivity", fileManager.getResult(nextLine[0], nextLine[1]));
             }
             fileManager.uniqueStringToVertexSet();
 //            Toast.makeText(getApplicationContext(), "Data Storage complete.", Toast.LENGTH_SHORT).show();
-            Toast.makeText(getApplicationContext(), "Generating Edges...", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Generating Edges...", Toast.LENGTH_SHORT).show();
             fileManager.generateAllEdges();
-            Toast.makeText(getApplicationContext(), "Load complete.", Toast.LENGTH_SHORT).show();
+            mDialog.show();
+//            Toast.makeText(getApplicationContext(), "Load complete.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -136,19 +153,27 @@ public class MainActivity extends ActionBarActivity {
      */
     private boolean validFile(String csvPath){
         boolean status = false;
+        Dialog mDialog = new Dialog(MainActivity.this);
         if(csvPath == null){
-            Toast.makeText(getApplicationContext(), "There is no file loaded.", Toast.LENGTH_SHORT).show();
+            mDialog.setTitle("There is no file loaded");
+//            Toast.makeText(getApplicationContext(), "There is no file loaded.", Toast.LENGTH_SHORT).show();
         }
         else if((csvPath.equals("")) || csvPath.isEmpty()){
-            Toast.makeText(getApplicationContext(), "There is no file loaded.", Toast.LENGTH_SHORT).show();
+            mDialog.setTitle("There is no file loaded");
+//            Toast.makeText(getApplicationContext(), "There is no file loaded.", Toast.LENGTH_SHORT).show();
         }
         else if(!(((csvPath.substring(csvPath.lastIndexOf('.'))).equals(".csv")) ||
         (csvPath.substring(csvPath.lastIndexOf('.'))).equals(".CSV"))){
+            mDialog.setTitle("Wrong file type loaded.");
             Toast.makeText(getApplicationContext(), "Wrong file type loaded.", Toast.LENGTH_SHORT).show();
         }
         else
         {
             status = true;
+        }
+        if(status == false)
+        {
+            mDialog.show();
         }
         return status;
     }

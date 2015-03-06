@@ -23,5 +23,6 @@
     <string name="title_activity_path">Fusion Path Finder</string>
     <string name="clearPath">Clear Target Path</string>
     <string name="clearAltPath">Clear Path</string>
+    <string name="title_activity_list">ListActivity</string>
 
 </resources>

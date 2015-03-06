@@ -1,4 +1,4 @@
-package com.path.fusion.fusion;
+package com.path.fusion.fusion.Object;
 
 import java.io.Serializable;
 

@@ -1,8 +1,10 @@
-package com.path.fusion.fusion;
+package com.path.fusion.fusion.Controller;
 
-import android.os.Environment;
 import android.util.Log;
 import android.util.Pair;
+
+import com.path.fusion.fusion.Object.Edge;
+import com.path.fusion.fusion.Object.Vertex;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -225,12 +227,12 @@ public class FileManager {
     }
 
     /**
-     * getValue - Retrieves the expected result of the combination of the first and second pair.
+     * getResult - Retrieves the expected result of the combination of the first and second pair.
      * @param pairLeft
      * @param pairRight
      * @return
      */
-    public String getValue(String pairLeft, String pairRight){
+    public String getResult(String pairLeft, String pairRight){
         return fusionList.get(new Pair(pairLeft, pairRight));
     }
 
@@ -238,11 +240,11 @@ public class FileManager {
      * getMaterial - Uses information on the first part of the pair and the expected result to
      * find out the Second part of the pair needed to create the result
      * @param pairLeft - First part of the pair to create the result
-     * @param value - Expected result
+     * @param result - Expected result
      * @return
      */
-    public String getMaterial(String pairLeft, String value){
-        return fusionList2.get(new Pair(pairLeft, value));
+    public String getMaterial(String pairLeft, String result){
+        return fusionList2.get(new Pair(pairLeft, result));
     }
 
     /**
@@ -250,6 +252,50 @@ public class FileManager {
      */
     public void destroyInstance(){
         instance = null;
+    }
+
+    /**
+     * getMaterialUsage - Gets all combinations using specified material
+     * @param material1
+     * @return
+     */
+    public String[][] getMaterialUsage(Vertex material1){
+        String[][] combination = null;
+        String result = null;
+        int i = 0;
+        for(String material2 : uniqueString ){
+            result = null;
+            result = fusionList.get(new Pair(material1.getName(),material2));
+            if(!(result.equals("") || result == null)){
+                combination[i][0] = material1.getName();
+                combination[i][1] = material2;
+                combination[i][2] = result;
+                i++;
+            }
+        }
+        return combination;
+    }
+
+    /**
+     * getAllMaterials - Gets all combinations that create the given result.
+     * @param result
+     * @return
+     */
+    public String[][] getAllMaterials(Vertex result){
+        String[][] combination = null;
+        String material2 = null;
+        int i = 0;
+        for(String material1 : uniqueString){
+            material2 = null;
+            material2 = fusionList2.get(new Pair(material1,result.getName()));
+            if(!(material2.equals("") || material2 == null)){
+                combination[i][0] = material1;
+                combination[i][1] = material2;
+                combination[i][2] = result.getName();
+                i++;
+            }
+        }
+        return combination;
     }
 
     public static HashMap<String, Vertex> getUniqueHash() {

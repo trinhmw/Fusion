@@ -1,9 +1,10 @@
-package com.path.fusion.fusion;
+package com.path.fusion.fusion.Activity;
 
+import android.app.Dialog;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +14,11 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.path.fusion.fusion.Controller.FileManager;
+import com.path.fusion.fusion.Controller.PathAlgorithm;
+import com.path.fusion.fusion.R;
+import com.path.fusion.fusion.Object.Vertex;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -33,6 +39,11 @@ public class PathActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_path);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setIcon(R.drawable.ic_launcher);
+        }
         fileManager = FileManager.getInstance();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, fileManager.getUnique());
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, fileManager.getUnique());
@@ -116,7 +127,7 @@ public class PathActivity extends ActionBarActivity {
             } else {
                 for (Vertex vertex : path) {
                     if (i != 0) {
-                        textView.append(" + " + fileManager.getMaterial(result.get(i - 1).getName(), vertex.getName()) + "=" + vertex.getName() + "\n");
+                        textView.append(" + " + fileManager.getMaterial(result.get(i - 1).getName(), vertex.getName()) + " = " + vertex.getName() + "\n");
                     }
                     if (i == 0) {
                         textView.append(vertex.getName() + "\n");
@@ -143,7 +154,10 @@ public class PathActivity extends ActionBarActivity {
         boolean status = false;
         if(content == null || content.isEmpty())
         {
-            Toast.makeText(this, "Please load CSV file before finding fusion results.", Toast.LENGTH_SHORT).show();
+            Dialog mDialog = new Dialog(PathActivity.this);
+            mDialog.setTitle("Please load CSV file before finding fusion results.");
+            mDialog.show();
+//            Toast.makeText(this, "Please load CSV file before finding fusion results.", Toast.LENGTH_SHORT).show();
         }
         else
         {

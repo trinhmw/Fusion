@@ -1,5 +1,7 @@
-package com.path.fusion.fusion;
+package com.path.fusion.fusion.Activity;
 
+import android.app.Dialog;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -12,13 +14,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.path.fusion.fusion.Controller.FileManager;
+import com.path.fusion.fusion.R;
+
 import java.util.ArrayList;
 
 
 public class FusionActivity extends ActionBarActivity {
     Spinner mCategory1Spinner;
     Spinner mCategory2Spinner;
-    TextView mTextview;
+    TextView mTextView;
     Button mFusionButton;
     private FileManager fileManager;
 
@@ -26,6 +31,11 @@ public class FusionActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fusion);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setIcon(R.drawable.ic_launcher);
+        }
         fileManager = FileManager.getInstance();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, fileManager.getUnique());
@@ -34,19 +44,19 @@ public class FusionActivity extends ActionBarActivity {
         mCategory1Spinner.setAdapter(adapter);
         mCategory2Spinner.setAdapter(adapter);
 
-        mTextview = (TextView) findViewById(R.id.textView);
-        mTextview.setMovementMethod(new ScrollingMovementMethod());
+        mTextView = (TextView) findViewById(R.id.textView);
+        mTextView.setMovementMethod(new ScrollingMovementMethod());
 
         mFusionButton = (Button) findViewById(R.id.fusionButton);
         View.OnClickListener resultOnClickListener = new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 if (validSpinner(fileManager.getUnique())) {
-                    String result = fileManager.getValue(mCategory1Spinner.getSelectedItem().toString(), mCategory2Spinner.getSelectedItem().toString());
+                    String result = fileManager.getResult(mCategory1Spinner.getSelectedItem().toString(), mCategory2Spinner.getSelectedItem().toString());
                     if (result == null) {
-                        mTextview.setText("No information available.");
+                        mTextView.setText("No information available.");
                     } else {
-                        mTextview.setText(result);
+                        mTextView.setText(result);
                     }
                 }
             }
@@ -65,7 +75,10 @@ public class FusionActivity extends ActionBarActivity {
         boolean status = false;
         if(content == null || content.isEmpty())
         {
-            Toast.makeText(this, "Please load CSV file before finding fusion results.", Toast.LENGTH_SHORT).show();
+            Dialog mDialog = new Dialog(FusionActivity.this);
+            mDialog.setTitle("Please load CSV file before finding fusion results.");
+            mDialog.show();
+//            Toast.makeText(this, "Please load CSV file before finding fusion results.", Toast.LENGTH_SHORT).show();
         }
         else
         {

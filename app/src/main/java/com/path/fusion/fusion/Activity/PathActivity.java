@@ -154,10 +154,7 @@ public class PathActivity extends ActionBarActivity {
         boolean status = false;
         if(content == null || content.isEmpty())
         {
-            Dialog mDialog = new Dialog(PathActivity.this);
-            mDialog.setTitle("Please load CSV file before finding fusion results.");
-            mDialog.show();
-//            Toast.makeText(this, "Please load CSV file before finding fusion results.", Toast.LENGTH_SHORT).show();
+            errorDialog("Please load CSV file before finding fusion results.");
         }
         else
         {
@@ -165,6 +162,23 @@ public class PathActivity extends ActionBarActivity {
         }
         return status;
     }
+
+    public void errorDialog(String message) {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_ok);
+        dialog.setTitle("Error");
+        TextView textView = (TextView) dialog.findViewById(R.id.dialogText);
+        textView.setText(message);
+        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

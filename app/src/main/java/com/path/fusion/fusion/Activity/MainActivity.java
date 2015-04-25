@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ipaulpro.afilechooser.utils.FileUtils;
@@ -33,10 +34,9 @@ public class MainActivity extends ActionBarActivity {
     private final String NO_FILE = "There is no CSV file loaded.";
     Button mOpenFileButton;
     Button mLoadFileButton;
-//    Button mClearDataButton;
     Button mFusionButton;
     Button mPathButton;
-//    Button mGenerateEdgesButton;
+    Button mListButton;
 
     private FileManager fileManager;
 
@@ -63,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
 
 
         mLoadFileButton = (Button) findViewById(R.id.loadFileButton);
-        View.OnClickListener loadFileOnClickListener = new View.OnClickListener(){
+        mLoadFileButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 try {
@@ -75,48 +75,35 @@ public class MainActivity extends ActionBarActivity {
                 }
 
             }
-        };
-        mLoadFileButton.setOnClickListener(loadFileOnClickListener);
+        });
 
-//        mClearDataButton = (Button) findViewById(R.id.clearDataButton);
-//        View.OnClickListener clearDataOnClickListener = new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                fileManager.deleteFile();
-//                Toast.makeText(getApplicationContext(), "Data deleted.", Toast.LENGTH_SHORT).show();
-//            }
-//        };
-//        mClearDataButton.setOnClickListener(clearDataOnClickListener);
+
+        mListButton = (Button) findViewById(R.id.listButton);
+        mListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent listIntent = new Intent(getApplicationContext(), ListActivity.class);
+                startActivity(listIntent);
+            }
+        });
 
         mFusionButton = (Button) findViewById(R.id.fusionButton);
-        View.OnClickListener fusionOnClickListener = new View.OnClickListener(){
+        mFusionButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent fusionIntent = new Intent(getApplicationContext(), FusionActivity.class);
                 startActivity(fusionIntent);
             }
-        };
-        mFusionButton.setOnClickListener(fusionOnClickListener);
+        });
 
         mPathButton = (Button) findViewById(R.id.pathButton);
-        View.OnClickListener pathOnClickListener = new View.OnClickListener(){
+        mPathButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent fusionIntent = new Intent(getApplicationContext(), PathActivity.class);
                 startActivity(fusionIntent);
             }
-        };
-        mPathButton.setOnClickListener(pathOnClickListener);
-
-
-//        mGenerateEdgesButton = (Button) findViewById(R.id.generateEdgesButton);
-//        View.OnClickListener generateOnClickListener = new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                fileManager.generateAllEdges();
-//            }
-//        };
-//        mGenerateEdgesButton.setOnClickListener(generateOnClickListener);
+        });
 
     }
 
@@ -127,22 +114,15 @@ public class MainActivity extends ActionBarActivity {
      */
     private void loadFile() throws IOException {
         if(validFile(csvPath)) {
-            Dialog mDialog = new Dialog(MainActivity.this);
             CSVReader reader = new CSVReader(new FileReader(csvPath), ',', ';', 1);
             String[] nextLine;
-            mDialog.setTitle("Load file complete.");
-//            mDialog.setContentView(R.layout.load_file);
-//            Toast.makeText(getApplicationContext(), "Loading file...", Toast.LENGTH_SHORT).show();
             while ((nextLine = reader.readNext()) != null) {
                 fileManager.addToMap(nextLine[0], nextLine[1], nextLine[2]);
                 Log.d("OutputMainActivity", fileManager.getResult(nextLine[0], nextLine[1]));
             }
             fileManager.uniqueStringToVertexSet();
-//            Toast.makeText(getApplicationContext(), "Data Storage complete.", Toast.LENGTH_SHORT).show();
-//            Toast.makeText(getApplicationContext(), "Generating Edges...", Toast.LENGTH_SHORT).show();
             fileManager.generateAllEdges();
-            mDialog.show();
-//            Toast.makeText(getApplicationContext(), "Load complete.", Toast.LENGTH_SHORT).show();
+            dialog("Load file complete.");
         }
     }
 
@@ -153,28 +133,21 @@ public class MainActivity extends ActionBarActivity {
      */
     private boolean validFile(String csvPath){
         boolean status = false;
-        Dialog mDialog = new Dialog(MainActivity.this);
         if(csvPath == null){
-            mDialog.setTitle("There is no file loaded");
-//            Toast.makeText(getApplicationContext(), "There is no file loaded.", Toast.LENGTH_SHORT).show();
+            errorDialog("There is no file loaded");
         }
         else if((csvPath.equals("")) || csvPath.isEmpty()){
-            mDialog.setTitle("There is no file loaded");
-//            Toast.makeText(getApplicationContext(), "There is no file loaded.", Toast.LENGTH_SHORT).show();
+            errorDialog("There is no file loaded");
         }
         else if(!(((csvPath.substring(csvPath.lastIndexOf('.'))).equals(".csv")) ||
         (csvPath.substring(csvPath.lastIndexOf('.'))).equals(".CSV"))){
-            mDialog.setTitle("Wrong file type loaded.");
-            Toast.makeText(getApplicationContext(), "Wrong file type loaded.", Toast.LENGTH_SHORT).show();
+            errorDialog("Wrong file type loaded.");
         }
         else
         {
             status = true;
         }
-        if(status == false)
-        {
-            mDialog.show();
-        }
+
         return status;
     }
 
@@ -213,7 +186,7 @@ public class MainActivity extends ActionBarActivity {
                             mOpenFileButton.setText(path);
                             csvPath = path;
                         } catch (Exception e) {
-                            Log.e("FileSelectorTestActivity", "File select error", e);
+                            Log.e("MainAcitvity", "File select error", e);
                         }
                     }
                 }
@@ -242,5 +215,37 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void errorDialog(String message) {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_ok);
+        dialog.setTitle("Error");
+        TextView textView = (TextView) dialog.findViewById(R.id.dialogText);
+        textView.setText(message);
+        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    public void dialog(String message) {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_ok);
+        dialog.setTitle("Status");
+        TextView textView = (TextView) dialog.findViewById(R.id.dialogText);
+        textView.setText(message);
+        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }

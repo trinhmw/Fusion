@@ -32,7 +32,7 @@ public class FusionActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fusion);
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null){
+        if (actionBar != null) {
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setIcon(R.drawable.ic_launcher);
         }
@@ -48,7 +48,7 @@ public class FusionActivity extends ActionBarActivity {
         mTextView.setMovementMethod(new ScrollingMovementMethod());
 
         mFusionButton = (Button) findViewById(R.id.fusionButton);
-        View.OnClickListener resultOnClickListener = new View.OnClickListener(){
+        View.OnClickListener resultOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validSpinner(fileManager.getUnique())) {
@@ -68,20 +68,15 @@ public class FusionActivity extends ActionBarActivity {
 
     /**
      * validSpinner - Checks content of the Arraylist for the adapter to make sure it's not null or empty
+     *
      * @param content
      * @return
      */
-    public boolean validSpinner(ArrayList<String> content){
+    public boolean validSpinner(ArrayList<String> content) {
         boolean status = false;
-        if(content == null || content.isEmpty())
-        {
-            Dialog mDialog = new Dialog(FusionActivity.this);
-            mDialog.setTitle("Please load CSV file before finding fusion results.");
-            mDialog.show();
-//            Toast.makeText(this, "Please load CSV file before finding fusion results.", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        if (content == null || content.isEmpty()) {
+            errorDialog("Please load CSV file before finding fusion results.");
+        } else {
             status = true;
         }
         return status;
@@ -107,5 +102,22 @@ public class FusionActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void errorDialog(String message) {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_ok);
+        dialog.setTitle("Error");
+        TextView textView = (TextView) dialog.findViewById(R.id.dialogText);
+        textView.setText(message);
+        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }

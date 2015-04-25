@@ -281,21 +281,21 @@ public class FileManager {
      * @param result
      * @return
      */
-    public String[][] getAllMaterials(Vertex result){
-        String[][] combination = null;
-        String material2 = null;
-        int i = 0;
+    public ArrayList<ArrayList<String>> getAllMaterials(Vertex result){
+//        String[][] combination = null;
+        ArrayList<ArrayList<String>> combinations = new ArrayList<ArrayList<String>>();
+        String material2;
         for(String material1 : uniqueString){
-            material2 = null;
             material2 = fusionList2.get(new Pair(material1,result.getName()));
-            if(!(material2.equals("") || material2 == null)){
-                combination[i][0] = material1;
-                combination[i][1] = material2;
-                combination[i][2] = result.getName();
-                i++;
+            if(material2 != null){
+                ArrayList<String> newCombination = new ArrayList<String>();
+                newCombination.add(material1);
+                newCombination.add(material2);
+                newCombination.add(result.getName());
+                combinations.add(newCombination);
             }
         }
-        return combination;
+        return combinations;
     }
 
     public static HashMap<String, Vertex> getUniqueHash() {

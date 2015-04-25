@@ -1,18 +1,22 @@
 package com.path.fusion.fusion.Activity;
 
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.path.fusion.fusion.Activity.Fragment.ListFragment;
 import com.path.fusion.fusion.R;
 
-public class ListActivity extends ActionBarActivity {
+public class ListActivity extends ActionBarActivity implements ListFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+
     }
 
 
@@ -36,5 +40,10 @@ public class ListActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

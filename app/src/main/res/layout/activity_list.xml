@@ -6,8 +6,9 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.path.fusion.fusion.Activity.ListActivity"
     android:fillViewport="true">
-
-
-
-
+    <fragment
+        android:name="com.path.fusion.fusion.Activity.Fragment.ListFragment"
+        android:id="@+id/list_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </ScrollView>

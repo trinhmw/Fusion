@@ -7,10 +7,8 @@
     <string name="import_csv">Import CSV</string>
     <string name="open">Open File</string>
     <string name="load">Load File</string>
-    <string name="clear">Clear Data</string>
     <string name="cat1">Fusion Material 1</string>
     <string name="cat2">Fusion material 2</string>
-    <string name="generate">Regenerate Edges</string>
     <string name="result">Fusion Result</string>
     <string name="getResult">Get Fusion Result</string>
     <string name="cat">Fusion Material</string>
@@ -23,6 +21,7 @@
     <string name="title_activity_path">Fusion Path Finder</string>
     <string name="clearPath">Clear Target Path</string>
     <string name="clearAltPath">Clear Path</string>
-    <string name="title_activity_list">ListActivity</string>
+    <string name="title_activity_list">List Possibilities</string>
+    <string name="list">List Possibilities</string>
 
 </resources>

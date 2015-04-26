@@ -116,6 +116,7 @@ public class MainActivity extends ActionBarActivity {
         if(validFile(csvPath)) {
             CSVReader reader = new CSVReader(new FileReader(csvPath), ',', ';', 1);
             String[] nextLine;
+            fileManager.clearData();
             while ((nextLine = reader.readNext()) != null) {
                 fileManager.addToMap(nextLine[0], nextLine[1], nextLine[2]);
                 Log.d("OutputMainActivity", fileManager.getResult(nextLine[0], nextLine[1]));

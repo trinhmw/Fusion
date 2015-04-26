@@ -169,6 +169,15 @@ public class FileManager {
 //        writeFile();
     }
 
+    public void clearData(){
+        fusionList.clear();
+        fusionList2.clear();
+        uniqueHash.clear();
+        edges.clear();
+        uniqueSet.clear();
+        uniqueString.clear();
+    }
+
     /**
      * uniqueStringToVertexSet - Makes a Vertex set out of an existing String set.
      */

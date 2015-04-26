@@ -19,6 +19,7 @@
         <!-- set default widget styles -->
         <item name="android:buttonStyle">@style/Button</item>
         <item name="android:textViewStyle">@style/TextView</item>
+        <item name="android:alertDialogStyle">@style/Dialog</item>
     </style>
 
     <style name="Button" parent="android:style/Widget.Button">
@@ -31,6 +32,11 @@
 
     <style name="TextView" parent="android:style/Widget.TextView">
         <item name="android:textSize">@dimen/normal_text</item>
+    </style>
+
+    <style name="Dialog" parent = "Base.Theme.AppCompat.Light.Dialog">
+        <item name="android:color">@color/white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>
